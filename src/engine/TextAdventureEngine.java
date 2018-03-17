@@ -23,8 +23,8 @@ public interface TextAdventureEngine {
 
 	public void init();
 	public void deInit();
-	
-    public void runGame();  
+
+	public void runGame();
 	public void endGame();
 
 	//public void updateInput();

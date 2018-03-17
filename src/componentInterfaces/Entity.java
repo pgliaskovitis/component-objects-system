@@ -30,5 +30,5 @@ public interface Entity extends GenericComponent {
 	public void addInteractionName(Hash name);
 	public boolean isInteractionName(Hash name);
 
-	public boolean canThisObjectBeSeenBy(Hash viewer, boolean includeInventoryObject);	
+	public boolean canThisObjectBeSeenBy(Hash viewer, boolean includeInventoryObject);
 }

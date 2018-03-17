@@ -25,21 +25,21 @@ public class TextAdventureMain {
 
 	// cannot instantiate
 	private TextAdventureMain() {
-		
+
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		Globals globalsManager = new Globals();
 
 		globalsManager.setComponentManager(new ObjectManagerDBImpl(globalsManager));
 		globalsManager.setTextAdventureEngine(new TextAdventureEngineImpl(globalsManager));
 		globalsManager.setTimer(new TimerImpl());
 		globalsManager.setConsole(new GameConsole());
-		
+
 		globalsManager.getTextAdventureEngine().init();
 		globalsManager.getTextAdventureEngine().runGame();
 		globalsManager.getTextAdventureEngine().deInit();

@@ -32,7 +32,7 @@ public class TextAdventureEngineImpl implements TextAdventureEngine {
 	private volatile String mInputBuffer;
 	private volatile boolean mbGameRunning;
 	private long mLastUpdateTick;
-		
+
 	public TextAdventureEngineImpl(Globals globalsManager) {
 		super();
 		this.globalsManager = globalsManager;
@@ -58,12 +58,12 @@ public class TextAdventureEngineImpl implements TextAdventureEngine {
 	@Override
 	public void deInit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void runGame() {
-		
+
 		mbGameRunning = true;
 		while (mbGameRunning) {
 			try {
@@ -79,7 +79,7 @@ public class TextAdventureEngineImpl implements TextAdventureEngine {
 				System.err.println(Arrays.toString(e.getStackTrace()));
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -88,18 +88,18 @@ public class TextAdventureEngineImpl implements TextAdventureEngine {
 	}
 
 	private void updateUserInput() {
-		
+
 		String userInput = globalsManager.getConsole().getNextUserInput();
 		if (userInput != null) {
-			mInputBuffer = userInput;	
+			mInputBuffer = userInput;
 			userInput = null; //memory management
 			System.err.println("Main loop consumer: " + mInputBuffer);
 		}
-		
+
 	}
 
 	private void processUserInput() {
-		
+
 		// Send input buffer to objects as a command message
 		GenericMessage msg = GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_COMMAND, mInputBuffer);
 		globalsManager.getComponentManager().broadcastMessage(msg);

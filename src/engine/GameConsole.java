@@ -86,11 +86,11 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 			inUser = new TextAreaStreamer(textArea);
 			inUserRawReader = new InputStreamReader(inUser);
 			inUserBufferedReader = new BufferedReader(inUserRawReader);
-		
-			// read() is only supposed to be called when someone actually calls System.in.read() or similar 
+
+			// read() is only supposed to be called when someone actually calls System.in.read() or similar
 			textArea.setFont(userFont);
 			textArea.addKeyListener(inUser);
-			System.setIn(inUser);           
+			System.setIn(inUser);
 
 			//also initialize game out stream
 			outGame = new PipedOutputStream(inGame);
@@ -99,7 +99,7 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 
 		} catch (SecurityException se) {
 
-		} 
+		}
 
 		quit = false; // signals the Threads that they should exit
 
@@ -118,16 +118,16 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 
 	@Override
 	public void windowClosed(WindowEvent evt) {
-		
+
 		quit = true;
 		try {
 			outGame.flush();
 			outGame.close();
 			inGame.close();
 		} catch (Exception e) {
-			
-		} 
-		
+
+		}
+
 		System.exit(0);
 	}
 
@@ -138,7 +138,7 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 	}
 
 	public void run() {
-		
+
 		while (Thread.currentThread() == readerUser) {
 
 			try {
@@ -164,7 +164,7 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 					String gameInput = inGameBufferedReader.readLine();
 					System.err.println("Game input: " + gameInput);
 					textArea.setFont(gameFont);
-					
+
 					//first count the new lines that exist in the game input as is
 					String[] lines = gameInput.split("\n");
 					System.err.println("Lines of " + Arrays.toString(lines) + ": " + lines.length);
@@ -178,7 +178,7 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 							if (i == 0) {
 								textArea.append(sentences[i] + ".\n");
 							} else {
-								textArea.append(sentences[i].substring(1) + ".\n");					            
+								textArea.append(sentences[i].substring(1) + ".\n");
 							}
 						}
 						textArea.append("\n");
@@ -192,15 +192,15 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 					waitingUserInput = true;
 					textArea.append(">");
 					textArea.setFont(userFont);
-					
+
 					try {
 						System.err.println("Text area: current line " + currentLineNum);
 						int nextLineOffset = textArea.getLineStartOffset(currentLineNum);
 						System.err.println("Text area: current line " + currentLineNum + " and next line offset " + nextLineOffset);
-						textArea.setCaretPosition(nextLineOffset + 1);						
+						textArea.setCaretPosition(nextLineOffset + 1);
 					} catch (BadLocationException e) {
 						System.err.println("Exception while trying to place caret after game input");
-					}	
+					}
 				}
 
 				if (quit) {
@@ -221,7 +221,7 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 	}
 
 	public String getNextUserInput() {
-		
+
 		return userInputBuffer.poll();
 	}
 
@@ -239,17 +239,17 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 		public void keyPressed(KeyEvent e) {
 			System.err.println(e.getKeyCode() + " pressed");
 			if (e.getKeyCode() == e.VK_ENTER) {
-				
+
 				int endPos = ta.getCaret().getMark();
 				int startPos = ta.getText().substring(0, endPos - 1).lastIndexOf('\n') + 1;
 				try {
-					str = ta.getText(startPos, endPos - startPos + 1); 
+					str = ta.getText(startPos, endPos - startPos + 1);
 					System.err.println("ENTER key pressed: " + str.substring(0, str.length() - 1)); //omit trailing new line character
 				} catch (BadLocationException ex) {
 				}
-				
+
 				pos = 0;
-				
+
 				synchronized (this) {
 					this.notifyAll();
 				}
@@ -259,19 +259,19 @@ public class GameConsole extends WindowAdapter implements WindowListener, Runnab
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		@Override
 		public int read() {
 			//test if the available input has reached its end
-			//and the EOS should be returned 
+			//and the EOS should be returned
 			if(str != null && pos == str.length()){
 				str = null;
 				//this is supposed to return -1 on "end of stream"

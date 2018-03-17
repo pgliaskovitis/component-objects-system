@@ -44,18 +44,18 @@ public class MessagesEnum {
 		MT_TELL_ROOM,
 		NUM_MESSAGE_TYPES;
 	}
-	
+
 	public static enum MessageResults {
 		MR_FALSE,
 		MR_TRUE,
 		MR_IGNORED,
 		MR_ERROR
 	}
-	
+
 	public static abstract class MessageInfo {
-				
+
 	}
-	
+
 	public static final class EventInfo extends MessageInfo {
 
 		private final Hash mEventName;
@@ -81,10 +81,10 @@ public class MessagesEnum {
 			return mActorId;
 		}
 	}
-	
+
 	public static final class ExamineInfo extends MessageInfo {
-		
-		private final Hash mExamineObjectInteractionName; 
+
+		private final Hash mExamineObjectInteractionName;
 		private final Hash mExaminerId;
 
 		public ExamineInfo(Hash examineObjectInteractionName, Hash examinerId) {
@@ -101,7 +101,7 @@ public class MessagesEnum {
 			return mExaminerId;
 		}
 	}
-	
+
 	public static final class PickupInfo extends MessageInfo {
 
 		private final Hash mCollectedObjectInteractionName;
@@ -120,7 +120,7 @@ public class MessagesEnum {
 		public Hash getCollectedObjectInteractionName() {
 			return mCollectedObjectInteractionName;
 		}
-    }
+	}
 
 	public static final class UseInfo extends MessageInfo {
 
@@ -148,8 +148,8 @@ public class MessagesEnum {
 		}
 	}
 
-    public static final class TellRoomInfo extends MessageInfo {
-    	
+	public static final class TellRoomInfo extends MessageInfo {
+
 		private final Hash mRoom;
 		private final String pMessage;
 

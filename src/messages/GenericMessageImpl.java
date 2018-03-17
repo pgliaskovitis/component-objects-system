@@ -21,7 +21,7 @@ package messages;
 
 public final class GenericMessageImpl implements GenericMessage {
 
-	private final MessagesEnum.MessageTypes myType; 
+	private final MessagesEnum.MessageTypes myType;
 	private final Object myData; // this is a single affected entityId or an info object depending on the message type
 
 	// private constructor

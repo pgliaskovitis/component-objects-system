@@ -20,9 +20,9 @@
 package messages;
 
 public interface GenericMessage {
-	
+
 	public MessagesEnum.MessageTypes getType();
-	
+
 	// the type of the contained data object should be consistent with the type field above
 	public Object getData();
 }

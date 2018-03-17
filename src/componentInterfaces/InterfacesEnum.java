@@ -22,10 +22,10 @@ package componentInterfaces;
 public class InterfacesEnum {
 
 	/*
-	 * enums, sadly, cannot have type parameters, and the following won't work:	
+	 * enums, sadly, cannot have type parameters, and the following won't work:
 	public static enum InterfacesEnum {
 
-		GenericComponentClass(componentInterfaces.GenericComponent.class), 
+		GenericComponentClass(componentInterfaces.GenericComponent.class),
 		ActorClass(componentInterfaces.Actor.class);
 
 		private Class<? extends GenericComponent> myClass;
@@ -40,7 +40,7 @@ public class InterfacesEnum {
 	}
 	*
 	*/
-	
+
 	/*
 	 * Enum types can implement interfaces.
 	 * Can enum types have variable arguments?
@@ -57,7 +57,7 @@ public class InterfacesEnum {
 	public static final Class<PuzzleLogic> PuzzleLogicInterface = componentInterfaces.PuzzleLogic.class;
 	public static final Class<Room> RoomInterface = componentInterfaces.Room.class;
 
-	// names of component types	
+	// names of component types
 	public static enum ComponentTypes {
 		Actor,
 		Collectable,

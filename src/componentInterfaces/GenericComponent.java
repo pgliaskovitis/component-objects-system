@@ -39,7 +39,7 @@ public interface GenericComponent {
 	public Hash getEntityId();
 	public void setEntityId(Hash entityId);
 
-	// associated entity component related methods	
+	// associated entity component related methods
 	public Entity getEntityComponent();
 	public void setEntityComponent(Entity entityComponent);
 
