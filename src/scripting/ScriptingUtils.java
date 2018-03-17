@@ -36,40 +36,39 @@ import org.xml.sax.SAXException;
 
 public class ScriptingUtils {
 
-    public static Document readXml(InputStream is) throws SAXException, IOException, ParserConfigurationException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	public static Document readXml(InputStream is) throws SAXException, IOException, ParserConfigurationException {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-        dbf.setValidating(false);
-        dbf.setIgnoringComments(false);
-        dbf.setIgnoringElementContentWhitespace(true);
-        dbf.setNamespaceAware(true);
-        // dbf.setCoalescing(true);
-        // dbf.setExpandEntityReferences(true);
+		dbf.setValidating(false);
+		dbf.setIgnoringComments(false);
+		dbf.setIgnoringElementContentWhitespace(true);
+		dbf.setNamespaceAware(true);
+		// dbf.setCoalescing(true);
+		// dbf.setExpandEntityReferences(true);
 
-        DocumentBuilder db = null;
-        db = dbf.newDocumentBuilder();
-        db.setEntityResolver(new NullResolver());
+		DocumentBuilder db = null;
+		db = dbf.newDocumentBuilder();
+		db.setEntityResolver(new NullResolver());
 
-        // db.setErrorHandler( new MyErrorHandler());
+		// db.setErrorHandler( new MyErrorHandler());
 
-        return db.parse(is);
-    }
+		return db.parse(is);
+	}
 
-    private static String getTextValue(Element ele, String tagName) {
-    	String textVal = null;
-    	NodeList nl = ele.getElementsByTagName(tagName);
-    	if(nl != null && nl.getLength() > 0) {
-    		Element el = (Element)nl.item(0);
-    		textVal = el.getFirstChild().getNodeValue();
-    	}
+	private static String getTextValue(Element ele, String tagName) {
+		String textVal = null;
+		NodeList nl = ele.getElementsByTagName(tagName);
+		if(nl != null && nl.getLength() > 0) {
+			Element el = (Element)nl.item(0);
+			textVal = el.getFirstChild().getNodeValue();
+		}
 
-    	return textVal;
-    }
-    
-    private static class NullResolver implements EntityResolver {
-        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-            return new InputSource(new StringReader(""));
-        }
-    }
-    
+		return textVal;
+	}
+
+	private static class NullResolver implements EntityResolver {
+		public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+			return new InputSource(new StringReader(""));
+		}
+	}
 }

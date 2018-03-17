@@ -23,18 +23,18 @@ public final class GenericMessageImpl implements GenericMessage {
 
 	private final MessagesEnum.MessageTypes myType; 
 	private final Object myData; // this is a single affected entityId or an info object depending on the message type
-	
+
 	// private constructor
 	private GenericMessageImpl(MessagesEnum.MessageTypes type, Object data) {
 		myType = type;
 		myData = data;
 	}
-	
+
 	// static factory method based on the private constructor
 	public static GenericMessage createMessage(MessagesEnum.MessageTypes type, Object data) {
 		return new GenericMessageImpl(type, data);
 	}
-	
+
 	public MessagesEnum.MessageTypes getType() {
 		return myType;
 	}
@@ -43,5 +43,4 @@ public final class GenericMessageImpl implements GenericMessage {
 	public Object getData() {
 		return myData;
 	}
-	
 }

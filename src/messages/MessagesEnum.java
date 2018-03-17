@@ -80,7 +80,6 @@ public class MessagesEnum {
 		public Hash getmActorId() {
 			return mActorId;
 		}
-		
 	}
 	
 	public static final class ExamineInfo extends MessageInfo {
@@ -149,7 +148,6 @@ public class MessagesEnum {
 		public Hash getUserId() {
 			return mUserId;
 		}
-		
 	}
 
     public static final class TellRoomInfo extends MessageInfo {
@@ -163,14 +161,13 @@ public class MessagesEnum {
             this.pMessage = pMessage;
         }
 
-        public Hash getRoom() {
+		public Hash getRoom() {
 			return mRoom;
 		}
 		
 		public String getpMessage() {
 			return pMessage;
 		}
-      	
     }
 	
 }
