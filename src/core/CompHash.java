@@ -9,7 +9,7 @@
 * (at your option) any later version.
 *
 * component-objects-system is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* but WITHOUT ANY WARRANTY;  without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
@@ -29,7 +29,7 @@ public final class CompHash implements Hash {
 	private static final String INVALID_HASH = "InvalidHash";
 
 	// caching the hashes because they are going to be the same most of the time
-	private static final Map<String, Hash> hashCache = new ConcurrentHashMap<String, Hash>(); 
+	private static final Map<String, Hash> hashCache = new ConcurrentHashMap<String, Hash>();
 
 	private final String hashValue;
 
@@ -38,13 +38,13 @@ public final class CompHash implements Hash {
 		if ((hash != null) && (!hash.equals("")) && (!hash.equals("null"))) {
 			this.hashValue = hash;
 		} else {
-			this.hashValue = INVALID_HASH; 
+			this.hashValue = INVALID_HASH;
 		}
 	}
 
 	// static factory method based on the private constructor
 	public static Hash getHashForName(String name) {
-		
+
 		Hash result = null;
 
 		if ((name != null) && (!name.equals("")) && (!name.equalsIgnoreCase("null"))) {

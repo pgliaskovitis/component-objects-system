@@ -41,13 +41,13 @@ import componentInterfaces.Room;
 
 public final class PlayerImpl extends GenericComponentImpl implements Player {
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.PlayerInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.PlayerInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Player, core.PlayerImpl.class);
 	}
@@ -67,7 +67,7 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 
 	@Override
 	public Set<Class<? extends GenericComponent>> getInterfaces() {
-		
+
 		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
 		output.add(InterfacesEnum.PlayerInterface);
 		return output;
@@ -80,20 +80,20 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch (messageWrapper.getType()) {
-		
+
 			case MT_OBJECT_CREATED: {
-						
+
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
-			
+
 			case MT_ALL_OBJECTS_CREATED: {
-				
+
 				globalsManager.getComponentManager().postMessage(getEntityComponent().getPosition(), GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_LOOK, null));
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
-			
+
 			case MT_COMMAND:
 			{
 				if (handleCommand((String)messageWrapper.getData())) {
@@ -101,8 +101,8 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 				}
 				return MessagesEnum.MessageResults.MR_FALSE;
 			}
-			
-			case MT_EVENT: { 
+
+			case MT_EVENT: {
 				// In the real world, this part would live in a script. That seems a bit overkill for this example though.
 				MessagesEnum.EventInfo pEventInfo = (MessagesEnum.EventInfo)messageWrapper.getData();
 				if (pEventInfo.getmEventName().equals(CompHash.getHashForName("StateChange")) && pEventInfo.getmTargetId().equals(CompHash.getHashForName("Laxative"))) {
@@ -111,20 +111,20 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 				}
 				if (pEventInfo.getmEventName().equals(CompHash.getHashForName("StateChange")) && pEventInfo.getmTargetId().equals(CompHash.getHashForName("WaterCooler"))) {
 					PuzzleLogic pCoolerPuzzle = (PuzzleLogic)globalsManager.getComponentManager().queryEntityForInterface(pEventInfo.getmTargetId(), InterfacesEnum.PuzzleLogicInterface);
-					if (pCoolerPuzzle != null) { 
+					if (pCoolerPuzzle != null) {
 						// if there is laxative in the water, we're out of luck
 						if (pCoolerPuzzle.getState().equals(CompHash.getHashForName("LaxativeInWaterIngested"))) {
 							globalsManager.print("Oh no! The laxative-enriched water has an explosive effect on your digestive system, rendering you hostage to your own bowels. You'll be lucky to see the outside of a lavatory for the next two weeks. Alas, there's no way you'll be able to make the GDC now. Your journey ends here.");
 							globalsManager.getTextAdventureEngine().endGame();
-						} 
+						}
 					}
 
 				}
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
-			
+
 			case MT_TELL_ROOM: {
-			
+
 				TellRoomInfo trInfo = (TellRoomInfo)messageWrapper.getData();
 				if (getEntityComponent().getPosition().equals(trInfo.getRoom())) {
 					//globalsManager.getTextAdventureEngine().clearInputStringDisplay();
@@ -140,7 +140,7 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 
 	@Override
 	public boolean handleCommand(final String commandString) {
-		
+
 		if (commandString != null) {
 			String[] commandTokens = commandString.split(" ", 2);
 			List<String> commandList = Arrays.asList(commandTokens);
@@ -168,7 +168,7 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 								getEntityId(),
 								GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_SET_INVENTORY_ITEM_POS,
 										destRoom));
-						
+
 						globalsManager.getComponentManager().postMessage(destRoom,
 								GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_LOOK, null));
 					} else {
@@ -178,28 +178,28 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 				return true;
 
 			} else if (command.equalsIgnoreCase(CompHash.getHashForName("Help"))) {
-				
+
 				globalsManager.print("Command list: Enter <room>, Look, Examine <item>, Get <item>, Use <item> [with <item>], Inventory");
 				return true;
-				
+
 			} else if (command.equalsIgnoreCase(CompHash.getHashForName("Look"))) {
 
 				Room pCurrentRoomInterface = (Room) globalsManager.getComponentManager().queryEntityForInterface(
 						getEntityComponent().getPosition(), InterfacesEnum.RoomInterface);
-				
+
 				globalsManager.getComponentManager().postMessage(pCurrentRoomInterface.getEntityId(),
 						GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_LOOK, null));
-				
+
 				return true;
 
 			} else if (command.equalsIgnoreCase(CompHash.getHashForName("Examine"))) {
-				
+
 				MessagesEnum.ExamineInfo exInfo = new MessagesEnum.ExamineInfo(CompHash.getHashForName(commandList
 						.get(1)), getEntityId());
 				globalsManager.getComponentManager().broadcastMessage(
 						GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_EXAMINE, exInfo));
 				return true;
-				
+
 			}  else if (command.equalsIgnoreCase(CompHash.getHashForName("Take"))
 					|| command.equalsIgnoreCase(CompHash.getHashForName("Get"))) {
 
@@ -233,7 +233,7 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 							GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_USE, useInfo));
 				} else if (useObjectsList.size() == 2) {
 					// Use A with B
-					// Be careful! UseInfo must have the "recipient" object first  
+					// Be careful! UseInfo must have the "recipient" object first
 					useInfo = new MessagesEnum.UseInfo(CompHash.getHashForName(useObjectsList.get(1)),
 							CompHash.getHashForName(useObjectsList.get(0)), getEntityId());
 					globalsManager.getComponentManager().broadcastMessage(
@@ -254,7 +254,7 @@ public final class PlayerImpl extends GenericComponentImpl implements Player {
 			globalsManager.print("I don't know how to: " + commandString);
 			return false;
 		}
-		
+
 		return false;
 	}
 }

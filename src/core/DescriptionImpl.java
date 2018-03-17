@@ -41,13 +41,13 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 	private Hash mShortDescr;
 	private Hash mLongDescr;
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.DescriptionInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.DescriptionInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Description, core.DescriptionImpl.class);
 	}
@@ -59,7 +59,7 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 
 	public DescriptionImpl(Element generatorElement) {
 		super();
-		
+
 		NodeList children = generatorElement.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("string")) {
@@ -73,14 +73,14 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 					//read in long description
 					mLongDescr = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
 				}
-			} 
+			}
 		}
-		
+
 	}
 
 	@Override
 	public Set<Class<? extends GenericComponent>> getInterfaces() {
-		
+
 		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
 		output.add(InterfacesEnum.DescriptionInterface);
 		return output;
@@ -93,11 +93,11 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch (messageWrapper.getType()) {
 
 			case MT_EXAMINE: {
-			
+
 				ExamineInfo examineInfo = (ExamineInfo)messageWrapper.getData();
 				if (getEntityComponent().isInteractionName(examineInfo.getExamineObjectInteractionName())) {
 					// The user is looking at me. Check if this object (the one containing the description component) can be seen by the user

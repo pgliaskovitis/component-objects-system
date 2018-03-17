@@ -42,11 +42,11 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 
 	private Set<Hash> mConnectedRoomsSet = new HashSet<Hash>();
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.RoomInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.RoomInterface);
 	}
 
 	public static void registerImplementationClass() {
@@ -138,7 +138,7 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 		// Description
 		Description pDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(getEntityId(), InterfacesEnum.DescriptionInterface);
 		if (pDescr != null) {
-			
+
 			globalsManager.print(pDescr.getShortDescr().getHashValue());
 			globalsManager.print(pDescr.getLongDescr().getHashValue());
 		}
@@ -152,7 +152,7 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 		globalsManager.print("Items:");
 		GenericMessage describeObjectMsg = GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_DESCRIBE_OBJECT, getEntityId());
 		globalsManager.getComponentManager().broadcastMessage(describeObjectMsg);
-		
+
 		// Exits
 		if (mConnectedRoomsSet.isEmpty()) {
 			globalsManager.print("There are no exits from this room.");

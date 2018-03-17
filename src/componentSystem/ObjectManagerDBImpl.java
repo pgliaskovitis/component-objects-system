@@ -63,7 +63,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 	 * Interfaces are Class<? extends GenericComponent> or componentInterfaces.*.class, i.e., the class objects of the interfaces
 	 * ComponentTypes are Class<? extends GenericComponentImpl>, i.e., the class objects of the actual implementation classes
 	 * But, componentTypes are indexed in the hashMaps indirectly, through their implemented interfaces
-	 * Essentially, there is a many-to-one relationship between Interfaces and ComponentTypes   
+	 * Essentially, there is a many-to-one relationship between Interfaces and ComponentTypes
 	 * Entities are virtual, they exist only within the EntitiesContainer as aggregations of components
 	 * There is redundancy in this initial implementation, since component instances get indexed both by the ComponentsContainer and the EntitiesContainer
 	 * The key is that the actual component objects are created once, but are then referenced by two separate data structures
@@ -154,22 +154,22 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 	@Override
 	public void createAllEntitiesFromStream(InputStream input) {
-		
+
 		try {
 			Document doc = ScriptingUtils.readXml(input);
-			
+
 			NodeList allEntities = doc.getElementsByTagName("entity");
-			
+
 			for (int i = 0; i < allEntities.getLength(); i++) {
 				Element currentEntity = (Element)allEntities.item(i);
 				createNewEntity(currentEntity);
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Failed to initialize entities from XML file: " + e.getMessage());
 			System.err.println(Arrays.toString(e.getStackTrace()));
 		}
-		
+
 	}
 
 	public Hash createNewEntity(Element generatorElement) {
@@ -182,17 +182,17 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		// find entityId
 		String currentEntityName = generatorElement.getAttribute("name");
 		currentEntityId = CompHash.getHashForName(currentEntityName);
-		
+
 		StringBuilder strb = new StringBuilder();
 		strb.append("Handling entity " + currentEntityName + " -> ");
-		
+
 		NodeList allEntityComponents = generatorElement.getElementsByTagName("component");
-		
+
 		// first find and construct entityComponent for this entity before all other components
 		for (int j = 0; j < allEntityComponents.getLength(); j++) {
 			Element currentXMLComponent = (Element) allEntityComponents.item(j);
 			String currentComponentName = currentXMLComponent.getAttribute("name");
-			
+
 			if (currentComponentName.equalsIgnoreCase("Entity")) {
 				// found entity component for this entity
 				strb.append(currentComponentName + ", ");
@@ -206,7 +206,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		for (int j = 0; j < allEntityComponents.getLength(); j++) {
 			Element currentXMLComponent = (Element) allEntityComponents.item(j);
 			String currentComponentName = currentXMLComponent.getAttribute("name");
-			
+
 			if (!currentComponentName.equalsIgnoreCase("Entity")) {
 				// found entity component for this entity
 				strb.append(currentComponentName + ", ");
@@ -231,7 +231,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		}
 
 		System.err.println(strb.toString());
-		
+
 		return currentEntityId;
 	}
 
@@ -253,12 +253,12 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 			// this is already an entity component
 			output.setEntityComponent((Entity)output); //self reference?
 		}
-		
+
 		return output;
 	}
 
 	private Hash generateNewComponentHash(String componentTypeName, int sequenceNumber) {
-		
+
 		return CompHash.getHashForName(componentTypeName + "_" + sequenceNumber);
 	}
 
@@ -294,46 +294,46 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 	@Override
 	public <T> GenericComponent queryEntityForInterface(Hash entityId, Class<T> componentInterface) {
-		
+
 		return allEntities.getSpecificComponentOfEntity(entityId, componentInterface);
 	}
 
 	@Override
 	public <T> boolean deleteAllComponentsForInterface(Class<T> componentInterface) {
-		
+
 		Set<T> deletedComponents = allComponents.getComponentsForInterface(componentInterface);
-		
+
 		if (deletedComponents.isEmpty()) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean deleteEntity(Hash entityId) {
-		
+
 		return true;
 	}
 
 	@Override
 	public <T> GenericComponent deleteComponentOfEntity(Hash entityId, Class<T> componentInterface) {
-		
+
 		return null;
 	}
 
 	@Override
 	public void registerAllMessageTypes() {
-		
+
 		allComponentMessages.registerAllMessageTypes();
 	}
 
-	// Here, we have opted for interfaces to be subscribing to message types, 
+	// Here, we have opted for interfaces to be subscribing to message types,
 	// instead of components themselves subscribing to message types
 	// This is being tried out for greater decoupling of theoretical concepts
 	@Override
 	public <T> void subscribeInterfaceToMessageType(Class<T> componentInterface, MessagesEnum.MessageTypes messageType) {
-		
+
 		if (componentInterface == null) {
 			System.err.println("componentInterface is null");
 			return;
@@ -364,10 +364,10 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 	@Override
 	public void postMessage(Hash entityId, GenericMessage message) {
-		
+
 		// FUTURE: what if we found which components of the entity are actually subscribed to this MessageType and send the message only to them?
 		Set<GenericComponent> affectedComponents = allEntities.getAllComponentsOfEntity(entityId);
-		
+
 		for (GenericComponent comp: affectedComponents) {
 			comp.handleMessage(message);
 		}
@@ -375,9 +375,9 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 	@Override
 	public void broadcastMessage(GenericMessage message) {
-		
+
 		Set<GenericComponent> affectedComponents = getSubscribedComponentsForMessageType(message.getType());
-		
+
 		for (GenericComponent comp: affectedComponents) {
 			comp.handleMessage(message);
 		}
@@ -392,7 +392,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		initializeComponentType(core.InventoryImpl.class);
 		initializeComponentType(core.PlayerImpl.class);
 		initializeComponentType(core.PuzzleLogicImpl.class);
-		initializeComponentType(core.RoomImpl.class);        
+		initializeComponentType(core.RoomImpl.class);
 	}
 
 	@Override
@@ -407,7 +407,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 	}
 
 	private void initializeComponentType(Class<? extends GenericComponentImpl> componentClass) {
-		
+
 		Method m;
 
 		try {
@@ -415,7 +415,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 			m.invoke(null, this.globalsManager);
 		} catch (Exception e) {
 			System.err.println("Registration of component type " + componentClass + " failed at step 1");
-		} 
+		}
 
 		try {
 			m = componentClass.getMethod("registerInterfaces", (Class<?>[]) null);
@@ -423,12 +423,12 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		} catch (Exception e) {
 			System.err.println("Registration of component type " + componentClass + " failed at step 2");
 		}
-		
+
 		try {
 			m = componentClass.getMethod("registerImplementationClass", (Class<?>[]) null);
 			m.invoke(null, (Object[]) null);
 		} catch (Exception e) {
-			System.err.println("Registration of component type " + componentClass + " failed at step 3");        	
+			System.err.println("Registration of component type " + componentClass + " failed at step 3");
 		}
 
 		try{
@@ -449,7 +449,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		private Map<Class<? extends GenericComponent>, Set<GenericComponent>> mapComponentTypesToComponents = new ConcurrentHashMap<Class<? extends GenericComponent>, Set<GenericComponent>>();
 
 		public <T> void registerInterface(Class<T> componentInterface) {
-			
+
 			if (componentInterface == null) {
 				throw new NullPointerException("componentInterface is null");
 			}
@@ -459,20 +459,20 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 			if (!mapComponentTypesToComponents.containsKey(componentInterface.asSubclass(InterfacesEnum.GenericComponentInterface))) {
 				mapComponentTypesToComponents.put(componentInterface.asSubclass(InterfacesEnum.GenericComponentInterface), new HashSet<GenericComponent>());
 			}
-			
+
 		}
 
 		public <T> void addComponentForInterface(Class<T> componentInterface, GenericComponent componentInstance) {
-			
+
 			if (componentInterface == null) {
 				throw new NullPointerException("componentInterface is null");
 			}
-			
+
 			mapComponentTypesToComponents.get(componentInterface).add(componentInstance);
 		}
 
 		public <T> Set<T> getComponentsForInterface(Class<T> componentInterface) {
-			
+
 			if (componentInterface == null) {
 				throw new NullPointerException("componentInterface is null");
 			}
@@ -488,7 +488,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 			return typeCastComponents;
 		}
-		
+
 	}
 
 	private static class EntitiesContainer {
@@ -500,7 +500,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 		private Map<Class<? extends GenericComponent>, Map<Hash, GenericComponent>> mapEntitiesToComponents = new ConcurrentHashMap<Class<? extends GenericComponent>, Map<Hash, GenericComponent>>();
 
 		public <T> void registerInterface(Class<T> componentInterface) {
-			
+
 			if (componentInterface == null) {
 				throw new NullPointerException("componentInterface is null");
 			}
@@ -510,18 +510,18 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 			if (!mapEntitiesToComponents.containsKey(componentInterface.asSubclass(InterfacesEnum.GenericComponentInterface))) {
 				mapEntitiesToComponents.put(componentInterface.asSubclass(InterfacesEnum.GenericComponentInterface), new HashMap<Hash, GenericComponent>());
 			}
-			
+
 		}
-		
+
 		public <T> void addComponentToEntity(Class<T> componentInterface, Hash entityId, GenericComponent component) {
-			
+
 			if (entityId == null) {
 				throw new NullPointerException("entity is null");
 			}
-			
+
 			mapEntitiesToComponents.get(componentInterface).put(entityId, component);
 		}
-		
+
 		public <T> GenericComponent getSpecificComponentOfEntity(Hash entityId, Class<T> componentInterface) {
 
 			if (entityId == null) {
@@ -552,7 +552,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 			return output;
 		}
-		
+
 	}
 
 	private static class MessageTypesContainer {
@@ -564,9 +564,9 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 				mapMessageTypesToComponentTypes.put(messageType, new HashSet<Class<? extends GenericComponent>>());
 			}
 		}
-		
+
 		public <T> void subscribeInterfaceToMessageType(MessagesEnum.MessageTypes messageType, Class<T> componentInterface) {
-			
+
 			if (messageType == null) {
 				throw new NullPointerException("MessageType to be subscribed to is null");
 			}
@@ -584,14 +584,14 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 			return mapMessageTypesToComponentTypes.get(messageType);
 		}
-		
+
 	}
 
 	// this is used for dynamic component creation
 	private static class ComponentImplInfo {
 
 		private final Class<? extends GenericComponentImpl> componentClass;
-		
+
 		private int componentCounter;
 
 		public ComponentImplInfo(ObjectManagerDB manager, Class<?> componentClass) {
@@ -614,7 +614,7 @@ public class ObjectManagerDBImpl implements ObjectManagerDB {
 
 			return output;
 		}
-		
+
 		public int incrementAndGetCounter() {
 			return componentCounter++;
 		}

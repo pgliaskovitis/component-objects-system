@@ -25,12 +25,12 @@ import java.util.Set;
 public final class CoreUtils {
 
 	public static <T> Set<T> union(Set<? extends T> s1, Set<? extends T> s2) {
-		
+
 		Set<T> output = new HashSet<T>();
 		output.addAll(s1);
-		output.addAll(s2);		
-		
+		output.addAll(s2);
+
 		return output;
 	}
-		
+
 }

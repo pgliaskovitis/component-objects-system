@@ -44,13 +44,13 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 	private boolean mVisible;
 	private Set<Hash> mInteractionNameSet = new HashSet<Hash>();
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.EntityInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.EntityInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Entity, core.EntityImpl.class);
 	}
@@ -88,12 +88,12 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 				}
 			}
 		}
-		  
+
 	}
 
 	@Override
 	public Set<Class<? extends GenericComponent>> getInterfaces() {
-		
+
 		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
 		output.add(InterfacesEnum.EntityInterface);
 		return output;
@@ -112,27 +112,27 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch(messageWrapper.getType()) {
-		
+
 			case MT_OBJECT_CREATED: {
 				Description pDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(getEntityId(), InterfacesEnum.DescriptionInterface);
 				if	((pDescr != null) && (!isInteractionName(pDescr.getShortDescr()))) {
 					addInteractionName(pDescr.getShortDescr());
 				}
 			}
-				
+
 			case MT_HIDE: {
 				setVisible(false);
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
-				
+
 			case MT_SHOW: {
 				setVisible(true);
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
 		}
-		
+
 		return MessagesEnum.MessageResults.MR_IGNORED;
 	}
 
@@ -175,11 +175,11 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 
 	@Override
 	public boolean canThisObjectBeSeenBy(Hash viewer, boolean includeInventoryObject) {
-		
+
 		boolean hasBeenCollected = true;
-		
+
 		Collectable pCollectable = (Collectable)globalsManager.getComponentManager().queryEntityForInterface(getEntityId(), InterfacesEnum.CollectableInterface);
-		
+
 		if (pCollectable == null) {
 			hasBeenCollected = false;
 		} else if (!pCollectable.isCollected()) {
@@ -191,11 +191,11 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 			if (!getVisible()) {
 				return false; // Can't be seen by anyone
 			}
-			
+
 			Entity pViewerEntity = (Entity)globalsManager.getComponentManager().queryEntityForInterface(viewer, InterfacesEnum.EntityInterface);
 			if (pViewerEntity == null) {
 				return false;
-			} 
+			}
 			if (getPosition().equals(pViewerEntity.getPosition())) {
 				return true;
 			}

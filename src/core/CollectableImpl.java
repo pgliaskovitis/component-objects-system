@@ -40,12 +40,12 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 
 	private Hash mHolder;
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.CollectableInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.CollectableInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Collectable, core.CollectableImpl.class);
 	}
@@ -62,7 +62,7 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 
 	@Override
 	public Set<Class<? extends GenericComponent>> getInterfaces() {
-		
+
 		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
 		output.add(InterfacesEnum.CollectableInterface);
 		return output;
@@ -78,7 +78,7 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 
 		switch (messageWrapper.getType()) {
 			case MT_BE_PICKED_UP: {
-				
+
 				PickupInfo	pPickupInfo = (PickupInfo)messageWrapper.getData();
 				if (getEntityComponent().isInteractionName(pPickupInfo.getCollectedObjectInteractionName())) {
 				// You talkin' to me? You talkin' to me? Yes you are...
@@ -122,7 +122,7 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 				return MessagesEnum.MessageResults.MR_FALSE; // If we succeeded, we should have returned already
 			}
 
-			case MT_PICK_UP_SUCCESSFUL: { 
+			case MT_PICK_UP_SUCCESSFUL: {
 			// Make sure we know that we're being held (and who's doing the holding)
 				mHolder = (Hash)messageWrapper.getData();
 				return MessagesEnum.MessageResults.MR_TRUE;

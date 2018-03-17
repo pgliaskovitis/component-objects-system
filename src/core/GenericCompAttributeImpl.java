@@ -39,7 +39,7 @@ public class GenericCompAttributeImpl implements GenericCompAttribute {
 	@Override
 	public void setNumberList(List<Number> numberList) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public List<String> getStringList() {
@@ -49,7 +49,7 @@ public class GenericCompAttributeImpl implements GenericCompAttribute {
 	@Override
 	public void setStringList(List<String> stringList) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public List<GenericCompAttribute> getWrappedList() {
@@ -59,6 +59,6 @@ public class GenericCompAttributeImpl implements GenericCompAttribute {
 	@Override
 	public void setWrappedList(List<GenericCompAttribute> attributeSet) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

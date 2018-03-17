@@ -26,14 +26,14 @@ import messages.MessagesEnum;
 
 public final class GenericMessageImpl implements GenericMessage {
 
-	private final MessagesEnum.MessageTypes mType; 
+	private final MessagesEnum.MessageTypes mType;
 	private final Object mData; // this is a single affected entityId or an info object depending on the message type
-		
+
 	public GenericMessageImpl(MessagesEnum.MessageTypes type, Object data) {
 		mType = type;
 		mData = data;
 	}
-	
+
 	public MessagesEnum.MessageTypes getType() {
 		return mType;
 	}
@@ -42,5 +42,5 @@ public final class GenericMessageImpl implements GenericMessage {
 	public Object getData() {
 		return mData;
 	}
-	
+
 }

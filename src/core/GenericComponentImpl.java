@@ -84,17 +84,17 @@ public abstract class GenericComponentImpl implements GenericComponent {
 
 	@Override
 	public void setEntityComponent(Entity entityComponent) {
-		this.entityComponent = entityComponent;     
+		this.entityComponent = entityComponent;
 	}
 
-	@Override 
+	@Override
 	public void init(Hash entityId, Node generatorNode) {
 		this.entityId = entityId;
 	}
 
 	@Override
 	public void deInit() {
-		
+
 	}
 
 	// default implementation of message handling
@@ -105,6 +105,6 @@ public abstract class GenericComponentImpl implements GenericComponent {
 
 	@Override
 	public void update() {
-		
+
 	}
 }

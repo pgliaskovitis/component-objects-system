@@ -40,27 +40,27 @@ import componentInterfaces.PuzzleLogic;
 
 public final class ActorImpl extends GenericComponentImpl implements Actor {
 
-	private enum EBossState	{ 
-		IN_OFFICE, 
-		ON_WAY_TO_COOLER, 
-		DRINK, 
-		ON_WAY_TO_THERMOSTAT, 
-		SET_THERMOSTAT, 
-		ON_WAY_BACK_THROUGH_CORRIDOR, 
-		ON_WAY_TO_OFFICE 
+	private enum EBossState	{
+		IN_OFFICE,
+		ON_WAY_TO_COOLER,
+		DRINK,
+		ON_WAY_TO_THERMOSTAT,
+		SET_THERMOSTAT,
+		ON_WAY_BACK_THROUGH_CORRIDOR,
+		ON_WAY_TO_OFFICE
 	};
 
 	EBossState	mBossState;
 	private long mNextStateTime;
 	private boolean	mThermostatHot;
 
-	// the static methods must be implemented by every component for component type initialization purposes	
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.ActorInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.ActorInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Actor, core.ActorImpl.class);
 	}
@@ -74,14 +74,14 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 
 	//the componentId and entityId fields are set externally by the componentManager
 	public ActorImpl(Element generatorElement) {
-		super();	
+		super();
 		mBossState = EBossState.IN_OFFICE;
-		mThermostatHot = false; 
+		mThermostatHot = false;
 	}
 
 	@Override
 	public Set<Class<? extends GenericComponent>> getInterfaces() {
-		
+
 		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
 		output.add(InterfacesEnum.ActorInterface);
 		return output;
@@ -94,7 +94,7 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch (messageWrapper.getType()) {
 			case MT_EVENT: {
 				MessageInfo msgInfo = (MessageInfo)messageWrapper.getData();
@@ -110,16 +110,16 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 				describeCharacter(containingObject);
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
-		}	
-		
+		}
+
 		return MessagesEnum.MessageResults.MR_IGNORED;
 	}
 
 	@Override
 	public void update() {
-		
+
 		long currentTime = globalsManager.getTimer().getSeconds();
-		
+
 		switch (mBossState)	{
 			case IN_OFFICE: {
 				// The thermostat being hot sets off the sequence of events
@@ -140,9 +140,9 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 			}
 			case DRINK: {
 				if (currentTime >= mNextStateTime) {
-					
+
 					PuzzleLogic pWaterCoolerPuzzle = (PuzzleLogic)globalsManager.getComponentManager().queryEntityForInterface(CompHash.getHashForName("WaterCooler"), InterfacesEnum.PuzzleLogicInterface);
-					
+
 					if (pWaterCoolerPuzzle != null) {
 						globalsManager.print("The boss takes a drink from the water cooler.");
 						if (pWaterCoolerPuzzle.getState().equals(CompHash.getHashForName("normal"))) {
@@ -182,7 +182,7 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 				if (currentTime >= mNextStateTime) {
 					gotoRoom(CompHash.getHashForName("Corridor"));
 					mBossState = EBossState.ON_WAY_TO_OFFICE;
-					mNextStateTime = currentTime + 2;			
+					mNextStateTime = currentTime + 2;
 				}
 				break;
 			}
@@ -197,13 +197,13 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 	}
 
 	private void handleEvent(MessagesEnum.EventInfo eventInfo) {
-		
+
 		if (eventInfo.getmEventName().equals(CompHash.getHashForName("StateChange"))) {
-		
+
 			if (eventInfo.getmTargetId().equals(CompHash.getHashForName("Thermostat"))) {
-			
+
 				PuzzleLogic pThermoPuzzle = (PuzzleLogic)globalsManager.getComponentManager().queryEntityForInterface(eventInfo.getmTargetId(), InterfacesEnum.PuzzleLogicInterface);
-				if (pThermoPuzzle != null) { 
+				if (pThermoPuzzle != null) {
 					// Go get a drink
 					if (pThermoPuzzle.getState().equals(CompHash.getHashForName("hot"))) {
 						mThermostatHot = true;
@@ -217,13 +217,13 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 
 	@Override
 	public void describeCharacter(Hash viewer) {
-		
+
 		Description pDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(getEntityId(), InterfacesEnum.DescriptionInterface);
-		if (pDescr == null) { 
+		if (pDescr == null) {
 			// We have nothing to describe
 			return;
 		}
-		
+
 		if (getEntityComponent().canThisObjectBeSeenBy(viewer, false)) {
 			globalsManager.print(pDescr.getShortDescr().getHashValue());
 		}
@@ -231,14 +231,14 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 
 	@Override
 	public void tellRoom(final String pMsg) {
-		
+
 		MessagesEnum.TellRoomInfo trInfo = new MessagesEnum.TellRoomInfo(getEntityComponent().getPosition(), pMsg);
 		globalsManager.getComponentManager().broadcastMessage(GenericMessageImpl.createMessage(MessagesEnum.MessageTypes.MT_TELL_ROOM, trInfo));
 	}
 
 	@Override
 	public void gotoRoom(Hash room) {
-		
+
 		Description pEnteredRoomDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(room, InterfacesEnum.DescriptionInterface);
 
 		if (pEnteredRoomDescr != null) {
@@ -247,7 +247,7 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 			tmpStr.append(pEnteredRoomDescr.getShortDescr().getHashValue());
 			tellRoom(tmpStr.toString());
 		}
-		
+
 		Description pLeftRoomDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(getEntityComponent().getPosition(), InterfacesEnum.DescriptionInterface);
 
 		getEntityComponent().setPosition(room);
@@ -257,6 +257,6 @@ public final class ActorImpl extends GenericComponentImpl implements Actor {
 			tmpStr.append(pLeftRoomDescr.getShortDescr().getHashValue());
 			tellRoom(tmpStr.toString());
 		}
-		
+
 	}
 }

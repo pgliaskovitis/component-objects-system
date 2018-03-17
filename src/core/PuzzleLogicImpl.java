@@ -46,13 +46,13 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 	private Map<Hash, StateInfo> mStateInfoMap = new HashMap<Hash, StateInfo>();
 	private Hash mCurrentState;
 
-	// the static methods must be implemented by every component for component type initialization purposes 
+	// the static methods must be implemented by every component for component type initialization purposes
 	// or else, perhaps, Java should support static methods in interfaces
 
 	public static void registerInterfaces() {
-		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.PuzzleLogicInterface); 
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.PuzzleLogicInterface);
 	}
-			
+
 	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.PuzzleLogic, core.PuzzleLogicImpl.class);
 	}
@@ -69,7 +69,7 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 
 		Hash bufferStateTransition = null;
 		StateTransitionInfo bufferStateTransitionInfo = null;
-		
+
 		Hash bufferState = null;
 		StateInfo bufferStateInfo = null;
 
@@ -113,7 +113,7 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -135,25 +135,25 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 		switch (messageWrapper.getType()) {
 
 			case MT_OBJECT_CREATED: {
-				
+
 				setDescriptionForState(mCurrentState);
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
 
 			case MT_DESCRIBE_OBJECT: {
-				
+
 				Hash containingObject = (Hash)messageWrapper.getData();
 				describeObject(containingObject);
 				return MessagesEnum.MessageResults.MR_TRUE;
 			}
 
 			case MT_USE: {
-				
+
 				MessagesEnum.UseInfo pUseInfo = (MessagesEnum.UseInfo)messageWrapper.getData();
 				if (pUseInfo == null) {
 					return MessagesEnum.MessageResults.MR_ERROR;
 				}
-				if (getEntityComponent().isInteractionName(pUseInfo.getUseObjectInteractionName())) { 
+				if (getEntityComponent().isInteractionName(pUseInfo.getUseObjectInteractionName())) {
 					// The user is talking to me. Check if this object can be used by the user
 					if (getEntityComponent().canThisObjectBeSeenBy(pUseInfo.getUserId(), true)) {
 						if (pUseInfo.getUseWithInteractionName().isValid()) {
@@ -170,23 +170,23 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 						}
 					}
 				}
-				return MessagesEnum.MessageResults.MR_TRUE;    			
+				return MessagesEnum.MessageResults.MR_TRUE;
 			}
 
 		}
-		
+
 		return MessagesEnum.MessageResults.MR_IGNORED;
 	}
 
 	@Override
 	public Hash getState() {
-		
+
 		return mCurrentState;
 	}
 
 	@Override
 	public boolean setState(Hash targetState, boolean silent) {
-		
+
 		if (!targetState.isValid()) {
 			return false;
 		}
@@ -213,8 +213,8 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 	@Override
 	public boolean use() {
 
-		StateTransitionInfo transitionInfo = mStateTransitionMap.get(mCurrentState); 
-		
+		StateTransitionInfo transitionInfo = mStateTransitionMap.get(mCurrentState);
+
 		if (transitionInfo == null) {
 			// There is no transition out of this state
 			return false;
@@ -226,15 +226,15 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 			// We need an (additional) object to get to the next state
 			globalsManager.print("Nothing excruciatingly interesting happens.");
 			return false;
-		} 
-		
+		}
+
 		return setState(targetState, false);
 	}
 
 
 	@Override
 	public boolean useWith(Hash userId, Hash object) {
-		
+
 		StateTransitionInfo transitionInfo = mStateTransitionMap.get(mCurrentState);
 
 		if (transitionInfo == null) {
@@ -270,7 +270,7 @@ public final class PuzzleLogicImpl extends GenericComponentImpl implements Puzzl
 		StateTransitionInfo transitionInfo = new StateTransitionInfo();
 		transitionInfo.setNeededObject(neededObject);
 		transitionInfo.setEndState(toState);
-		mStateTransitionMap.put(fromState, transitionInfo);	    
+		mStateTransitionMap.put(fromState, transitionInfo);
 	}
 
 	private void addStateInfo(Hash state, StateInfo stateInfo) {
