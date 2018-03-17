@@ -53,12 +53,12 @@ public class MessagesEnum {
 	}
 	
 	public static abstract class MessageInfo {
-				    
+				
 	}
 	
 	public static final class EventInfo extends MessageInfo {
 
-		private final Hash mEventName;		
+		private final Hash mEventName;
 		private final Hash mTargetId;
 		private final Hash mActorId;
 
@@ -103,7 +103,7 @@ public class MessagesEnum {
 	}
 	
 	public static final class PickupInfo extends MessageInfo {
-        
+
 		private final Hash mCollectedObjectInteractionName;
 		private final Hash mCollectorId;
 
@@ -123,7 +123,7 @@ public class MessagesEnum {
     }
 
 	public static final class UseInfo extends MessageInfo {
-	    
+
 		private final Hash mUseObjectInteractionName;
 		private final Hash mUseWithInteractionName;
 		private final Hash mUserId;

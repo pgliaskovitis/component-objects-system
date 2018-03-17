@@ -24,45 +24,44 @@ import componentSystem.ObjectManagerDB;
 public class Globals {
 
 	private ObjectManagerDB componentManager;
-    private TextAdventureEngine textAdventureEngine;
+	private TextAdventureEngine textAdventureEngine;
 	private Timer timer;
 	private GameConsole console;
 
-    public ObjectManagerDB getComponentManager() {
+	public ObjectManagerDB getComponentManager() {
 		return componentManager;
 	}
-    
+
 	public void setComponentManager(ObjectManagerDB componentManager) {
-        this.componentManager = componentManager;
-    }
+		this.componentManager = componentManager;
+	}
 
 	public TextAdventureEngine getTextAdventureEngine() {
 		return textAdventureEngine;
 	}
-	
+
 	public void setTextAdventureEngine(TextAdventureEngine textAdventureEngine) {
-	    this.textAdventureEngine = textAdventureEngine;
+		this.textAdventureEngine = textAdventureEngine;
 	}
 
-    public Timer getTimer() {
-        return timer;
-    }
+	public Timer getTimer() {
+		return timer;
+	}
 
-    public GameConsole getConsole() {
-        return console;
-    }
+	public GameConsole getConsole() {
+		return console;
+	}
 
-    public void setConsole(GameConsole console) {
-        this.console = console;
-    }   
-    
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-	
+	public void setConsole(GameConsole console) {
+		this.console = console;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
 	public void print(String pStr) {
 		System.err.println("Sending game input " + pStr + " to piped output");
 		console.printGame(pStr);
 	}
-	
 }

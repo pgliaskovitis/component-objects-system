@@ -27,7 +27,7 @@ public interface TextAdventureEngine {
     public void runGame();  
 	public void endGame();
 
-    //public void updateInput();
+	//public void updateInput();
 	//public void clearInputStringDisplay();
 	//public void displayInputString();
 }

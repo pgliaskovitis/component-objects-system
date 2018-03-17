@@ -23,14 +23,13 @@ public class TimerImpl implements Timer {
 
 	private long mCurrentTime;
 	private long mBaseTime;
-	
+
 	public void reset() {
 		mBaseTime = System.currentTimeMillis();
 	}
-	
+
 	public long getSeconds() {
 		mCurrentTime = System.currentTimeMillis();
 		return (mCurrentTime - mBaseTime) / 1000;
 	}
-	
 }

@@ -20,7 +20,7 @@
 package engine;
 
 public interface Timer {
-	
+
 	public void reset();
 	public long getSeconds();
 }
