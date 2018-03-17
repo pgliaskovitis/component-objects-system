@@ -20,7 +20,7 @@
 package componentInterfaces;
 
 public interface Collectable extends GenericComponent {
-	
+
 	public boolean isCollected();
 	public Hash getHolder();
 }

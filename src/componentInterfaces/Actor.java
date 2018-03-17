@@ -20,7 +20,7 @@
 package componentInterfaces;
 
 public interface Actor extends GenericComponent {
-	
+
 	public void describeCharacter(Hash viewer);
 	public void tellRoom(String pMsg);
 	public void gotoRoom(Hash room);

@@ -26,7 +26,7 @@ import messages.GenericMessage;
 import messages.MessagesEnum;
 
 public interface GenericComponent {
-	
+
 	// database related methods
 	public Set<Class<? extends GenericComponent>> getInterfaces();
 	public Class<? extends GenericComponentImpl> getComponentType();

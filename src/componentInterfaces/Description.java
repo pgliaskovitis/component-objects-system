@@ -20,10 +20,10 @@
 package componentInterfaces;
 
 public interface Description extends GenericComponent {
-	
+
 	public Hash getShortDescr();
 	public void setShortDescr(Hash shortDescr);	
-	
+
 	public Hash getLongDescr();
 	public void setLongDescr(Hash longDescr);
 }

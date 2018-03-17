@@ -23,7 +23,7 @@ import java.util.List;
 
 // Generic attributes of specific components should be loaded automatically from script
 public interface GenericCompAttribute {
-	
+
 	public List<Number> getNumberList();
 	public void setNumberList(List<Number> numberList);
 

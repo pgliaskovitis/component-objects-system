@@ -20,33 +20,33 @@
 package componentInterfaces;
 
 public class InterfacesEnum {
-	
+
 	/*
 	 * enums, sadly, cannot have type parameters, and the following won't work:	
 	public static enum InterfacesEnum {
-		
+
 		GenericComponentClass(componentInterfaces.GenericComponent.class), 
-		ActorClass(componentInterfaces.Actor.class);		
-		
+		ActorClass(componentInterfaces.Actor.class);
+
 		private Class<? extends GenericComponent> myClass;
-		
+
 		InterfacesEnum(Class<? extends GenericComponent> myClass) {
 			this.myClass = myClass;
 		}
-		
+
 		public Class<? extends GenericComponent> getMyClass() {
 			return myClass;
 		}
 	}
- 	*
-    */
+	*
+	*/
 	
 	/*
 	 * Enum types can implement interfaces.
 	 * Can enum types have variable arguments?
 	 * */
 
-    // names of interfaces
+	// names of interfaces
 	public static final Class<GenericComponent> GenericComponentInterface = componentInterfaces.GenericComponent.class;
 	public static final Class<Actor> ActorInterface = componentInterfaces.Actor.class;
 	public static final Class<Collectable> CollectableInterface = componentInterfaces.Collectable.class;
@@ -56,7 +56,7 @@ public class InterfacesEnum {
 	public static final Class<Player> PlayerInterface = componentInterfaces.Player.class;
 	public static final Class<PuzzleLogic> PuzzleLogicInterface = componentInterfaces.PuzzleLogic.class;
 	public static final Class<Room> RoomInterface = componentInterfaces.Room.class;
-	
+
 	// names of component types	
 	public static enum ComponentTypes {
 		Actor,
@@ -68,7 +68,7 @@ public class InterfacesEnum {
 		PuzzleLogic,
 		Room,
 		Invalid;
-	    
+
 		@Override
 		public String toString() {
 			switch(this) {
@@ -93,9 +93,9 @@ public class InterfacesEnum {
 			}
 		}
 	}
-	
+
 	public static ComponentTypes getComponentTypeFromString(String componentTypeName) {
-		
+
 		if (componentTypeName.equalsIgnoreCase("entity")) {
 			return ComponentTypes.Entity;
 		} else if (componentTypeName.equalsIgnoreCase("description")) {
@@ -113,7 +113,7 @@ public class InterfacesEnum {
 		} else if (componentTypeName.equalsIgnoreCase("player")) {
 			return ComponentTypes.Player;
 		}
-		
+
 		return null;
 	}
 }

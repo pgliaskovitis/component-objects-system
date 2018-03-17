@@ -20,7 +20,7 @@
 package componentInterfaces;
 
 public interface Room extends GenericComponent {
-	
+
 	public boolean addConnectedRoom(Hash room);
 	public boolean iRoomConnected(Hash room);
 	public Hash getConnectedRoom(Hash interactionName);

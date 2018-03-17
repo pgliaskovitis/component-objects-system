@@ -23,12 +23,12 @@ public interface Entity extends GenericComponent {
 
 	public Hash getPosition();
 	public void setPosition(Hash room);
-	
+
 	public boolean getVisible();
 	public void setVisible(boolean visible);
-	
+
 	public void addInteractionName(Hash name);
 	public boolean isInteractionName(Hash name);
-	
+
 	public boolean canThisObjectBeSeenBy(Hash viewer, boolean includeInventoryObject);	
 }
