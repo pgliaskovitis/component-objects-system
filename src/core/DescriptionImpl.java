@@ -40,62 +40,62 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 
 	private Hash mShortDescr;
 	private Hash mLongDescr;
-	
-    // the static methods must be implemented by every component for component type initialization purposes 
-    // or else, perhaps, Java should support static methods in interfaces
-    
-    public static void registerInterfaces() {
+
+	// the static methods must be implemented by every component for component type initialization purposes 
+	// or else, perhaps, Java should support static methods in interfaces
+
+	public static void registerInterfaces() {
 		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.DescriptionInterface); 
-    }
-            
-    public static void registerImplementationClass() {
-		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Description, core.DescriptionImpl.class);
-    }
-    
-    public static void subscribeToMessageTypes() {
-		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.DescriptionInterface, MessagesEnum.MessageTypes.MT_EXAMINE);
-    }
-    // end of static initializations
-    
-    public DescriptionImpl(Element generatorElement) {
-        super();
-        
-        NodeList children = generatorElement.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).getNodeName().equalsIgnoreCase("string")) {
-                Node currentChild = children.item(i);
-                NamedNodeMap attributes = currentChild.getAttributes();
-                Node hashName = attributes.getNamedItem("name");
-                if (hashName.getTextContent().equalsIgnoreCase("ShortDesc")) {
-                	//read in short description
-                	mShortDescr = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
-                } else if (hashName.getTextContent().startsWith("LongDesc")) {
-                	//read in long description
-                	mLongDescr = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
-                }
-            } 
-        }
-        
-    }
-    
-    @Override
-    public Set<Class<? extends GenericComponent>> getInterfaces() {
-        
-        Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
-        output.add(InterfacesEnum.DescriptionInterface);
-        return output;
-    }
-    
-    @Override
-	public void init(Hash entityId, Node generatorNode) {
-        super.init(entityId, generatorNode);
 	}
-    
+			
+	public static void registerImplementationClass() {
+		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Description, core.DescriptionImpl.class);
+	}
+
+	public static void subscribeToMessageTypes() {
+		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.DescriptionInterface, MessagesEnum.MessageTypes.MT_EXAMINE);
+	}
+	// end of static initializations
+
+	public DescriptionImpl(Element generatorElement) {
+		super();
+		
+		NodeList children = generatorElement.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			if (children.item(i).getNodeName().equalsIgnoreCase("string")) {
+				Node currentChild = children.item(i);
+				NamedNodeMap attributes = currentChild.getAttributes();
+				Node hashName = attributes.getNamedItem("name");
+				if (hashName.getTextContent().equalsIgnoreCase("ShortDesc")) {
+					//read in short description
+					mShortDescr = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
+				} else if (hashName.getTextContent().startsWith("LongDesc")) {
+					//read in long description
+					mLongDescr = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
+				}
+			} 
+		}
+		
+	}
+
+	@Override
+	public Set<Class<? extends GenericComponent>> getInterfaces() {
+		
+		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
+		output.add(InterfacesEnum.DescriptionInterface);
+		return output;
+	}
+
+	@Override
+	public void init(Hash entityId, Node generatorNode) {
+		super.init(entityId, generatorNode);
+	}
+
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
 		
 		switch (messageWrapper.getType()) {
-		
+
 			case MT_EXAMINE: {
 			
 				ExamineInfo examineInfo = (ExamineInfo)messageWrapper.getData();
@@ -113,7 +113,7 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 		}
 
 		return MessagesEnum.MessageResults.MR_IGNORED;
-    }
+	}
 
 	@Override
 	public Hash getShortDescr() {
@@ -134,5 +134,4 @@ public final class DescriptionImpl extends GenericComponentImpl implements Descr
 	public void setLongDescr(Hash mLongDescr) {
 		this.mLongDescr = mLongDescr;
 	}
-	    
 }

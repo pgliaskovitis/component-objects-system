@@ -43,73 +43,73 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 	private Hash mRoom;
 	private boolean mVisible;
 	private Set<Hash> mInteractionNameSet = new HashSet<Hash>();
-	
-    // the static methods must be implemented by every component for component type initialization purposes 
-    // or else, perhaps, Java should support static methods in interfaces
-    
-    public static void registerInterfaces() {
+
+	// the static methods must be implemented by every component for component type initialization purposes 
+	// or else, perhaps, Java should support static methods in interfaces
+
+	public static void registerInterfaces() {
 		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.EntityInterface); 
-    }
-            
-    public static void registerImplementationClass() {
+	}
+			
+	public static void registerImplementationClass() {
 		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Entity, core.EntityImpl.class);
-    }
-    
-    public static void subscribeToMessageTypes() {
+	}
+
+	public static void subscribeToMessageTypes() {
 		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.EntityInterface, MessagesEnum.MessageTypes.MT_OBJECT_CREATED);
 		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.EntityInterface, MessagesEnum.MessageTypes.MT_HIDE);
 		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.EntityInterface, MessagesEnum.MessageTypes.MT_SHOW);
-    }
-    // end of static initializations
-    
-    public EntityImpl(Element generatorElement) {
-        super();
-        
-        NodeList children = generatorElement.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).getNodeName().equalsIgnoreCase("hash")) {
-                Node currentChild = children.item(i);
-                NamedNodeMap attributes = currentChild.getAttributes();
-                Node hashName = attributes.getNamedItem("name");
-                if (hashName.getTextContent().equalsIgnoreCase("Room")) {
-                	//read in room
-                	mRoom = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
-                } else if (hashName.getTextContent().startsWith("InteractionName")) {
-                	//read in interaction name
-                	mInteractionNameSet.add(CompHash.getHashForName(currentChild.getFirstChild().getNodeValue()));
-                }
-            } else if (children.item(i).getNodeName().equalsIgnoreCase("bool")) {
-                Node currentChild = children.item(i);
-                NamedNodeMap attributes = currentChild.getAttributes();
-                Node hashName = attributes.getNamedItem("name");
-                if (hashName.getTextContent().equalsIgnoreCase("Visible")) {
-                    //read in visible
-                    mVisible = Boolean.parseBoolean(currentChild.getFirstChild().getNodeValue());
-                }
-            }
-        }
-          
-    }
-    
-    @Override
-    public Set<Class<? extends GenericComponent>> getInterfaces() {
-        
-        Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
-        output.add(InterfacesEnum.EntityInterface);
-        return output;
-    }
-    
-    @Override
+	}
+	// end of static initializations
+
+	public EntityImpl(Element generatorElement) {
+		super();
+
+		NodeList children = generatorElement.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			if (children.item(i).getNodeName().equalsIgnoreCase("hash")) {
+				Node currentChild = children.item(i);
+				NamedNodeMap attributes = currentChild.getAttributes();
+				Node hashName = attributes.getNamedItem("name");
+				if (hashName.getTextContent().equalsIgnoreCase("Room")) {
+					//read in room
+					mRoom = CompHash.getHashForName(currentChild.getFirstChild().getNodeValue());
+				} else if (hashName.getTextContent().startsWith("InteractionName")) {
+					//read in interaction name
+					mInteractionNameSet.add(CompHash.getHashForName(currentChild.getFirstChild().getNodeValue()));
+				}
+			} else if (children.item(i).getNodeName().equalsIgnoreCase("bool")) {
+				Node currentChild = children.item(i);
+				NamedNodeMap attributes = currentChild.getAttributes();
+				Node hashName = attributes.getNamedItem("name");
+				if (hashName.getTextContent().equalsIgnoreCase("Visible")) {
+					//read in visible
+					mVisible = Boolean.parseBoolean(currentChild.getFirstChild().getNodeValue());
+				}
+			}
+		}
+		  
+	}
+
+	@Override
+	public Set<Class<? extends GenericComponent>> getInterfaces() {
+		
+		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
+		output.add(InterfacesEnum.EntityInterface);
+		return output;
+	}
+
+	@Override
 	public void init(Hash entityId, Node generatorNode) {
 		super.init(entityId, generatorNode);
 	}
-    
+
 	@Override
 	public void deInit() {
 		mInteractionNameSet.clear();
 		mInteractionNameSet = null;
 	}
-	
+
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
 		
@@ -135,34 +135,34 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 		
 		return MessagesEnum.MessageResults.MR_IGNORED;
 	}
-	
-    @Override
+
+	@Override
 	public Hash getPosition() {
 		return mRoom;
 	}
 
-    @Override
+	@Override
 	public void setPosition(Hash room) {
 		this.mRoom = room;
 	}
 
-    @Override
+	@Override
 	public boolean getVisible() {
 		return mVisible;
 	}
 
-    @Override
+	@Override
 	public void setVisible(boolean visible) {
 		this.mVisible = visible;
 	}
-    
+
 	@Override
 	public void addInteractionName(Hash name) {
 		if (name != null) {
 			mInteractionNameSet.add(name);
 		}
 	}
-	
+
 	@Override
 	public boolean isInteractionName(Hash name) {
 		System.err.println(mInteractionNameSet.toString());
@@ -172,7 +172,7 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean canThisObjectBeSeenBy(Hash viewer, boolean includeInventoryObject) {
 		
@@ -185,7 +185,7 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 		} else if (!pCollectable.isCollected()) {
 			hasBeenCollected = false;
 		}
-		
+
 		if (!hasBeenCollected) {
 		// The object is not collectable or it is collectable but not collected. Check if it's in the same room as the viewer.
 			if (!getVisible()) {
@@ -200,7 +200,7 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 				return true;
 			}
 		}
-			
+
 		if (pCollectable != null) {
 			if (pCollectable.isCollected()) {
 				if (pCollectable.getHolder().equals(viewer)) {
@@ -209,8 +209,7 @@ public final class EntityImpl extends GenericComponentImpl implements Entity {
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
 }

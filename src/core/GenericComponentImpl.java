@@ -35,77 +35,76 @@ import engine.Globals;
 //this class is STRICTLY for implementation sharing
 // all concrete component classes should be final
 public abstract class GenericComponentImpl implements GenericComponent {
-    
-    protected static Globals globalsManager;
-   
-    public static void injectGlobals(Globals globals) {
-        globalsManager = globals;
-    }
-    
-    protected Hash compId;
-    
-    // this is the Id of the entity containing this component, as stored in the object manager maps
-    protected Hash entityId;
-    
-    // this is a component that every other component within this entity needs to be able to access
-    protected Entity entityComponent;
-        
-    protected List<GenericCompAttribute> compAttributes;
 
-    @Override
-    public Class<? extends GenericComponentImpl> getComponentType() {
-    	return this.getClass();
-    }
-    
-    @Override
-    public Hash getCompId() {
-        return compId;
-    }
+	protected static Globals globalsManager;
 
-    @Override
-    public void setCompId(Hash compId) {
-        this.compId = compId;
-    }
-
-    @Override
-    public Hash getEntityId() {
-        return entityId;
-    }
-
-    @Override
-    public void setEntityId(Hash entityId) {
-        this.entityId = entityId;
-    }
-
-    @Override
-    public Entity getEntityComponent() {
-        return entityComponent;
-    }
-    
-    @Override
-    public void setEntityComponent(Entity entityComponent) {
-        this.entityComponent = entityComponent;     
-    }
-    
-    @Override 
-    public void init(Hash entityId, Node generatorNode) {
-        this.entityId = entityId;
-    }
-    
-    @Override
-    public void deInit() {
-    	
-    }
-    
-    // default implementation of message handling
-    @Override
-    public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-        return MessagesEnum.MessageResults.MR_IGNORED;
-    }
-    
-    @Override
-	public void update() {
-    	
+	public static void injectGlobals(Globals globals) {
+		globalsManager = globals;
 	}
 
+	protected Hash compId;
+
+	// this is the Id of the entity containing this component, as stored in the object manager maps
+	protected Hash entityId;
+
+	// this is a component that every other component within this entity needs to be able to access
+	protected Entity entityComponent;
+
+	protected List<GenericCompAttribute> compAttributes;
+
+	@Override
+	public Class<? extends GenericComponentImpl> getComponentType() {
+		return this.getClass();
+	}
+
+	@Override
+	public Hash getCompId() {
+		return compId;
+	}
+
+	@Override
+	public void setCompId(Hash compId) {
+		this.compId = compId;
+	}
+
+	@Override
+	public Hash getEntityId() {
+		return entityId;
+	}
+
+	@Override
+	public void setEntityId(Hash entityId) {
+		this.entityId = entityId;
+	}
+
+	@Override
+	public Entity getEntityComponent() {
+		return entityComponent;
+	}
+
+	@Override
+	public void setEntityComponent(Entity entityComponent) {
+		this.entityComponent = entityComponent;     
+	}
+
+	@Override 
+	public void init(Hash entityId, Node generatorNode) {
+		this.entityId = entityId;
+	}
+
+	@Override
+	public void deInit() {
+		
+	}
+
+	// default implementation of message handling
+	@Override
+	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
+		return MessagesEnum.MessageResults.MR_IGNORED;
+	}
+
+	@Override
+	public void update() {
+		
+	}
 }

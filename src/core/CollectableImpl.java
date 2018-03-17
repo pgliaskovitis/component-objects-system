@@ -39,43 +39,43 @@ import componentInterfaces.InterfacesEnum;
 public final class CollectableImpl extends GenericComponentImpl implements Collectable {
 
 	private Hash mHolder;
-	
-    // the static methods must be implemented by every component for component type initialization purposes 
-    // or else, perhaps, Java should support static methods in interfaces
-    public static void registerInterfaces() {
-    	globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.CollectableInterface); 
-    }
-            
-    public static void registerImplementationClass() {
-    	globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Collectable, core.CollectableImpl.class);
-    }
-    
-    public static void subscribeToMessageTypes() {
-    	globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.CollectableInterface, MessagesEnum.MessageTypes.MT_BE_PICKED_UP);
-    	globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.CollectableInterface, MessagesEnum.MessageTypes.MT_PICK_UP_SUCCESSFUL);
-    }
-    // end of static initializations
-    
-    public CollectableImpl(Element generatorElement) {
-        super();
-    }
-    
-    @Override
-    public Set<Class<? extends GenericComponent>> getInterfaces() {
-        
-        Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
-        output.add(InterfacesEnum.CollectableInterface);
-        return output;
-    }
-    
-    @Override
+
+	// the static methods must be implemented by every component for component type initialization purposes 
+	// or else, perhaps, Java should support static methods in interfaces
+	public static void registerInterfaces() {
+		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.CollectableInterface); 
+	}
+			
+	public static void registerImplementationClass() {
+		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Collectable, core.CollectableImpl.class);
+	}
+
+	public static void subscribeToMessageTypes() {
+		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.CollectableInterface, MessagesEnum.MessageTypes.MT_BE_PICKED_UP);
+		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.CollectableInterface, MessagesEnum.MessageTypes.MT_PICK_UP_SUCCESSFUL);
+	}
+	// end of static initializations
+
+	public CollectableImpl(Element generatorElement) {
+		super();
+	}
+
+	@Override
+	public Set<Class<? extends GenericComponent>> getInterfaces() {
+		
+		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
+		output.add(InterfacesEnum.CollectableInterface);
+		return output;
+	}
+
+	@Override
 	public void init(Hash entityId, Node generatorNode) {
 		super.init(entityId, generatorNode);
 	}
-    
+
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch (messageWrapper.getType()) {
 			case MT_BE_PICKED_UP: {
 				
@@ -121,7 +121,7 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 				}
 				return MessagesEnum.MessageResults.MR_FALSE; // If we succeeded, we should have returned already
 			}
-			
+
 			case MT_PICK_UP_SUCCESSFUL: { 
 			// Make sure we know that we're being held (and who's doing the holding)
 				mHolder = (Hash)messageWrapper.getData();
@@ -130,15 +130,14 @@ public final class CollectableImpl extends GenericComponentImpl implements Colle
 		}
 		return MessagesEnum.MessageResults.MR_IGNORED;
 	}
-	
-    @Override
-    public boolean isCollected() {
-    	return (mHolder != null);
+
+	@Override
+	public boolean isCollected() {
+		return (mHolder != null);
 	}
-    
-    @Override
-    public Hash getHolder() {
-    	return mHolder;
-    }
-    
+
+	@Override
+	public Hash getHolder() {
+		return mHolder;
+	}
 }

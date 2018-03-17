@@ -41,54 +41,53 @@ import componentInterfaces.Room;
 public final class RoomImpl extends GenericComponentImpl implements Room {
 
 	private Set<Hash> mConnectedRoomsSet = new HashSet<Hash>();
-	
-    // the static methods must be implemented by every component for component type initialization purposes 
-    // or else, perhaps, Java should support static methods in interfaces
-    
-    public static void registerInterfaces() {
+
+	// the static methods must be implemented by every component for component type initialization purposes 
+	// or else, perhaps, Java should support static methods in interfaces
+
+	public static void registerInterfaces() {
 		globalsManager.getComponentManager().registerComponentInterface(InterfacesEnum.RoomInterface); 
-    }
-            
-    public static void registerImplementationClass() {
-		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Room, core.RoomImpl.class);
-    }
-    
-    public static void subscribeToMessageTypes() {
-		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.RoomInterface, MessagesEnum.MessageTypes.MT_LOOK);
-    }
-    // end of static initializations
-    
-    public RoomImpl(Element generatorElement) {
-        super();
-        
-        NodeList children = generatorElement.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).getNodeName().equalsIgnoreCase("hash")) {
-                Node currentChild = children.item(i);
-                NamedNodeMap attributes = currentChild.getAttributes();
-                Node hashName = attributes.getNamedItem("name");
-                if (hashName.getTextContent().startsWith("ConnectedRoom")) {
-                	//read in connected room
-                	mConnectedRoomsSet.add(CompHash.getHashForName(currentChild.getFirstChild().getNodeValue()));
-                }
-            }
-        }
-        
-    }
-    
-    @Override
-    public Set<Class<? extends GenericComponent>> getInterfaces() {
-        
-        Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
-        output.add(InterfacesEnum.RoomInterface);
-        return output;
-    }
-    
-    @Override
-	public void init(Hash entityId, Node generatorNode) {
-    	super.init(entityId, generatorNode);
 	}
-	
+
+	public static void registerImplementationClass() {
+		globalsManager.getComponentManager().registerComponentImplInfo(InterfacesEnum.ComponentTypes.Room, core.RoomImpl.class);
+	}
+
+	public static void subscribeToMessageTypes() {
+		globalsManager.getComponentManager().subscribeInterfaceToMessageType(InterfacesEnum.RoomInterface, MessagesEnum.MessageTypes.MT_LOOK);
+	}
+	// end of static initializations
+
+	public RoomImpl(Element generatorElement) {
+		super();
+
+		NodeList children = generatorElement.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			if (children.item(i).getNodeName().equalsIgnoreCase("hash")) {
+				Node currentChild = children.item(i);
+				NamedNodeMap attributes = currentChild.getAttributes();
+				Node hashName = attributes.getNamedItem("name");
+				if (hashName.getTextContent().startsWith("ConnectedRoom")) {
+					//read in connected room
+					mConnectedRoomsSet.add(CompHash.getHashForName(currentChild.getFirstChild().getNodeValue()));
+				}
+			}
+		}
+	}
+
+	@Override
+	public Set<Class<? extends GenericComponent>> getInterfaces() {
+
+		Set<Class<? extends GenericComponent>> output = new HashSet<Class<? extends GenericComponent>>();
+		output.add(InterfacesEnum.RoomInterface);
+		return output;
+	}
+
+	@Override
+	public void init(Hash entityId, Node generatorNode) {
+		super.init(entityId, generatorNode);
+	}
+
 	@Override
 	public void deInit() {
 		mConnectedRoomsSet.clear();
@@ -97,16 +96,16 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 
 	@Override
 	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper) {
-		
+
 		switch(messageWrapper.getType()) {
 			case MT_LOOK: {
 				printLookDescription();
 				break;
 			}
 		}
-		
+
 		return MessagesEnum.MessageResults.MR_IGNORED;
-		
+
 	}
 
 	@Override
@@ -117,14 +116,14 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 
 	@Override
 	public Hash getConnectedRoom(Hash interactionName) {
-		
+
 		for (Hash connectedRoom: mConnectedRoomsSet) {
 			Entity pConnectedRoomEntity = (Entity)globalsManager.getComponentManager().queryEntityForInterface(connectedRoom, InterfacesEnum.EntityInterface);
 			if ((pConnectedRoomEntity != null) && (pConnectedRoomEntity.isInteractionName(interactionName))) {
 				return pConnectedRoomEntity.getEntityId();
 			}
 		}
-		
+
 		return CompHash.getHashForName(null);
 	}
 
@@ -135,7 +134,7 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 
 	@Override
 	public void printLookDescription() {
-		
+
 		// Description
 		Description pDescr = (Description)globalsManager.getComponentManager().queryEntityForInterface(getEntityId(), InterfacesEnum.DescriptionInterface);
 		if (pDescr != null) {
@@ -166,7 +165,6 @@ public final class RoomImpl extends GenericComponentImpl implements Room {
 				}
 			}
 		}
-		
+
 	}
-    
 }

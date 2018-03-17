@@ -34,31 +34,31 @@ import componentInterfaces.InterfacesEnum;
 
 public interface ObjectManagerDB {
 
-    // component-entity related methods
+	// component-entity related methods
 	public <T> void registerComponentInterface(Class<T> componentInterface);
 	//public <T> void addComponentForInterface(Class<T> componentInterface, GenericComponent componentInstance);
 	public <T> void addComponentForEntity(Class<T> componentInterface, Hash entityId, GenericComponent componentInstance);
-	
-    public void createAllEntitiesFromStream(InputStream input); //called by the engine
-        
-    public <T> Set<T> getComponentsForInterface(Class<T> componentInterface);
-    public Set<GenericComponent> getComponentsOfEntity(Hash entityId);
-    public <T> GenericComponent queryEntityForInterface(Hash entityId, Class<T> componentInterface);
-    
-    public <T> boolean deleteAllComponentsForInterface(Class<T> componentInterface);
-    public boolean deleteEntity(Hash entityId);
-    public <T> GenericComponent deleteComponentOfEntity(Hash entityId, Class<T> componentInterface);
-    	
+
+	public void createAllEntitiesFromStream(InputStream input); //called by the engine
+
+	public <T> Set<T> getComponentsForInterface(Class<T> componentInterface);
+	public Set<GenericComponent> getComponentsOfEntity(Hash entityId);
+	public <T> GenericComponent queryEntityForInterface(Hash entityId, Class<T> componentInterface);
+
+	public <T> boolean deleteAllComponentsForInterface(Class<T> componentInterface);
+	public boolean deleteEntity(Hash entityId);
+	public <T> GenericComponent deleteComponentOfEntity(Hash entityId, Class<T> componentInterface);
+
 	// message related methods
-    public void registerAllMessageTypes(); // called by the engine
+	public void registerAllMessageTypes(); // called by the engine
 	public <T> void subscribeInterfaceToMessageType(Class<T> componentInterface, MessagesEnum.MessageTypes messageType);
-	
-    public Set<GenericComponent> getSubscribedComponentsForMessageType(MessagesEnum.MessageTypes messageType);
-    public void postMessage(Hash entityId, GenericMessage message);
-    public void broadcastMessage(GenericMessage message);
-	
+
+	public Set<GenericComponent> getSubscribedComponentsForMessageType(MessagesEnum.MessageTypes messageType);
+	public void postMessage(Hash entityId, GenericMessage message);
+	public void broadcastMessage(GenericMessage message);
+
 	// component implementation related methods
-    public void registerAllComponentTypes(); // called by the engine
+	public void registerAllComponentTypes(); // called by the engine
 	public <T> void registerComponentImplInfo(InterfacesEnum.ComponentTypes componentTypeName, Class<T> componentClass);
-	
+
 }

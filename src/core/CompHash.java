@@ -25,14 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import componentInterfaces.Hash;
 
 public final class CompHash implements Hash {
-	
+
 	private static final String INVALID_HASH = "InvalidHash";
-	
+
 	// caching the hashes because they are going to be the same most of the time
 	private static final Map<String, Hash> hashCache = new ConcurrentHashMap<String, Hash>(); 
-	
+
 	private final String hashValue;
-	
+
 	// private constructor
 	private CompHash(String hash) {
 		if ((hash != null) && (!hash.equals("")) && (!hash.equals("null"))) {
@@ -46,14 +46,14 @@ public final class CompHash implements Hash {
 	public static Hash getHashForName(String name) {
 		
 		Hash result = null;
-		
+
 		if ((name != null) && (!name.equals("")) && (!name.equalsIgnoreCase("null"))) {
 			result = hashCache.get(name);
 		} else {
 			result = hashCache.get("null");
 			System.err.println("Null hash retrieved");
 		}
-		
+
 		if (result == null) {
 			result = new CompHash(name);
 			if ((name != null) && (!name.equals("")) && (!name.equalsIgnoreCase("null"))) {
@@ -66,12 +66,12 @@ public final class CompHash implements Hash {
 
 		return result;
 	}
-	
+
 	@Override
 	public String getHashValue() {
 		return hashValue;
 	}
-	
+
 	@Override
 	public boolean isValid() {
 		return (!hashValue.equals(INVALID_HASH));
@@ -89,7 +89,7 @@ public final class CompHash implements Hash {
 		//must be consistent with lower case names
 		return equalsIgnoreCase(targetHash);
 	}
-		
+
 	@Override
 	public boolean equalsIgnoreCase(Object targetHash) {
 		if (this == targetHash)
@@ -106,11 +106,10 @@ public final class CompHash implements Hash {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		// must be consistent with lower case names
 		return hashValue.toLowerCase();
 	}
-
 }
