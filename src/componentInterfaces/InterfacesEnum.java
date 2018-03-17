@@ -59,48 +59,46 @@ public class InterfacesEnum {
 	
 	// names of component types	
 	public static enum ComponentTypes {
-	    Actor,
-	    Collectable,
-	    Description,
-	    Entity,
-	    Inventory,
-	    Player,
-	    PuzzleLogic,
-	    Room,
-	    Invalid;
+		Actor,
+		Collectable,
+		Description,
+		Entity,
+		Inventory,
+		Player,
+		PuzzleLogic,
+		Room,
+		Invalid;
 	    
-	    @Override
-	    public String toString() {
-	    	switch(this) {
-	    		case Actor:
-	    			return "Actor";
-	    		case Collectable: 
-	    			return "Collectable";
-	    		case Description:
-	    			return "Description";
-	    		case Entity:
-	    			return "Entity";
-	    		case Inventory:
-	    			return "Inventory";
-	    		case Player:
-	    			return "Player";
-	    		case PuzzleLogic:
-	    			return "PuzzleLogic";
-	    		case Room:
-	    			return "Room";
-	    		default:
-	    			return "Invalid";
-	    	}
-	    		
-	    }
-	    
+		@Override
+		public String toString() {
+			switch(this) {
+				case Actor:
+					return "Actor";
+				case Collectable:
+					return "Collectable";
+				case Description:
+					return "Description";
+				case Entity:
+					return "Entity";
+				case Inventory:
+					return "Inventory";
+				case Player:
+					return "Player";
+				case PuzzleLogic:
+					return "PuzzleLogic";
+				case Room:
+					return "Room";
+				default:
+					return "Invalid";
+			}
+		}
 	}
 	
 	public static ComponentTypes getComponentTypeFromString(String componentTypeName) {
 		
 		if (componentTypeName.equalsIgnoreCase("entity")) {
 			return ComponentTypes.Entity;
-		}	else if (componentTypeName.equalsIgnoreCase("description")) {
+		} else if (componentTypeName.equalsIgnoreCase("description")) {
 			return ComponentTypes.Description;
 		} else if (componentTypeName.equalsIgnoreCase("collectable")) {
 			return ComponentTypes.Collectable;
@@ -112,11 +110,10 @@ public class InterfacesEnum {
 			return ComponentTypes.Actor;
 		} else if (componentTypeName.equalsIgnoreCase("puzzlelogic")) {
 			return ComponentTypes.PuzzleLogic;
-		}  else if (componentTypeName.equalsIgnoreCase("player")) {
+		} else if (componentTypeName.equalsIgnoreCase("player")) {
 			return ComponentTypes.Player;
 		}
 		
 		return null;
 	}
-	
 }

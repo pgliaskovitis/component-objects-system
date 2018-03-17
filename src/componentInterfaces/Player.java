@@ -21,5 +21,5 @@ package componentInterfaces;
 
 public interface Player extends GenericComponent {
 
-    public boolean handleCommand(String commandString);
+	public boolean handleCommand(String commandString);
 }

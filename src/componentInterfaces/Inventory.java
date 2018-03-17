@@ -21,12 +21,12 @@ package componentInterfaces;
 
 public interface Inventory extends GenericComponent {
 
-    public int getNumItems();
-    public Hash getItem(int index);
-    public boolean isItemInInventory(Hash itemId);
-    
-    public boolean insertItem(Hash itemId);
-    public void removeItem(Hash itemId);
-    public void examineInventory();
-    public void setItemPositions(Hash newPos);
+	public int getNumItems();
+	public Hash getItem(int index);
+	public boolean isItemInInventory(Hash itemId);
+
+	public boolean insertItem(Hash itemId);
+	public void removeItem(Hash itemId);
+	public void examineInventory();
+	public void setItemPositions(Hash newPos);
 }

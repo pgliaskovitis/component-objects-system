@@ -25,12 +25,11 @@ import java.util.List;
 public interface GenericCompAttribute {
 	
 	public List<Number> getNumberList();
-    public void setNumberList(List<Number> numberList);
-    
+	public void setNumberList(List<Number> numberList);
+
 	public List<String> getStringList();
-    public void setStringList(List<String> stringList);
-    
+	public void setStringList(List<String> stringList);
+
 	public List<GenericCompAttribute> getWrappedList();
-    public void setWrappedList(List<GenericCompAttribute> attributeSet);
-	
+	public void setWrappedList(List<GenericCompAttribute> attributeSet);
 }

@@ -21,9 +21,9 @@ package componentInterfaces;
 
 public interface PuzzleLogic extends GenericComponent {
 
-    public Hash getState();
-    public boolean setState(Hash targetState, boolean silent);
-    
-    public boolean use();
-    public boolean useWith(Hash userId, Hash object);
+	public Hash getState();
+	public boolean setState(Hash targetState, boolean silent);
+
+	public boolean use();
+	public boolean useWith(Hash userId, Hash object);
 }

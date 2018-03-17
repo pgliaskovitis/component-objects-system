@@ -27,27 +27,27 @@ import messages.MessagesEnum;
 
 public interface GenericComponent {
 	
-    // database related methods
-    public Set<Class<? extends GenericComponent>> getInterfaces();
-    public Class<? extends GenericComponentImpl> getComponentType();
-    
-    // component related methods
-    public Hash getCompId();
-    public void setCompId(Hash compId);
-    
-    // corresponding entity related methods
+	// database related methods
+	public Set<Class<? extends GenericComponent>> getInterfaces();
+	public Class<? extends GenericComponentImpl> getComponentType();
+
+	// component related methods
+	public Hash getCompId();
+	public void setCompId(Hash compId);
+
+	// corresponding entity related methods
 	public Hash getEntityId();
 	public void setEntityId(Hash entityId);
-	
+
 	// associated entity component related methods	
-    public Entity getEntityComponent();
-    public void setEntityComponent(Entity entityComponent);
-	
+	public Entity getEntityComponent();
+	public void setEntityComponent(Entity entityComponent);
+
 	//public void init(Hash entityId, GenericCompAttributeDTO initDTO);
 	public void init(Hash entityId, Node generatorNode);
 	public void deInit();
-	
-    public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper);
-	
+
+	public MessagesEnum.MessageResults handleMessage(final GenericMessage messageWrapper);
+
 	public void update();
 }

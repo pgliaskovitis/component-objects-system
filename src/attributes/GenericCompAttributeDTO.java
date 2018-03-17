@@ -27,37 +27,38 @@ public class GenericCompAttributeDTO implements GenericCompAttribute {
 
 	private List<Number> numberList;
 	private List<String> stringList;
-    private List<GenericCompAttribute> wrappedList;
+	private List<GenericCompAttribute> wrappedList;
         
     @Override
     public List<Number> getNumberList() {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public void setNumberList(List<Number> numberList) {
         // TODO Auto-generated method stub
-        
     }
+
     @Override
     public List<String> getStringList() {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public void setStringList(List<String> stringList) {
         // TODO Auto-generated method stub
-        
     }
+
     @Override
     public List<GenericCompAttribute> getWrappedList() {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public void setWrappedList(List<GenericCompAttribute> attributeSet) {
         // TODO Auto-generated method stub
-        
-    }	
-
+    }
 }
