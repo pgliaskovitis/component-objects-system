@@ -57,26 +57,26 @@ public class MessagesEnum {
 	}
 	
 	public static final class EventInfo extends MessageInfo {
-		
+
 		private final Hash mEventName;		
 		private final Hash mTargetId;
 		private final Hash mActorId;
-		
-		public EventInfo(Hash mEventName, Hash mTargetId, Hash mActorId) {
-            super();
-            this.mEventName = mEventName;
-            this.mTargetId = mTargetId;
-            this.mActorId = mActorId;
-        }
 
-        public Hash getmEventName() {
+		public EventInfo(Hash mEventName, Hash mTargetId, Hash mActorId) {
+			super();
+			this.mEventName = mEventName;
+			this.mTargetId = mTargetId;
+			this.mActorId = mActorId;
+		}
+
+		public Hash getmEventName() {
 			return mEventName;
 		}
-		
+
 		public Hash getmTargetId() {
 			return mTargetId;
 		}
-		
+
 		public Hash getmActorId() {
 			return mActorId;
 		}
@@ -86,42 +86,40 @@ public class MessagesEnum {
 		
 		private final Hash mExamineObjectInteractionName; 
 		private final Hash mExaminerId;
-		
-		public ExamineInfo(Hash examineObjectInteractionName, Hash examinerId) {
-            super();
-            this.mExamineObjectInteractionName = examineObjectInteractionName;
-            this.mExaminerId = examinerId;
-        }
 
-        public Hash getExamineObjectInteractionName() {
+		public ExamineInfo(Hash examineObjectInteractionName, Hash examinerId) {
+			super();
+			this.mExamineObjectInteractionName = examineObjectInteractionName;
+			this.mExaminerId = examinerId;
+		}
+
+		public Hash getExamineObjectInteractionName() {
 			return mExamineObjectInteractionName;
 		}
-		
+
 		public Hash getExaminerId() {
 			return mExaminerId;
 		}
-		
 	}
 	
 	public static final class PickupInfo extends MessageInfo {
         
 		private final Hash mCollectedObjectInteractionName;
 		private final Hash mCollectorId;
-		
-		public PickupInfo(Hash collectedObjectInteractionName, Hash collectorId) {
-            super();
-            this.mCollectedObjectInteractionName = collectedObjectInteractionName;
-            this.mCollectorId = collectorId;
-        }
 
-        public Hash getCollectorId() {
+		public PickupInfo(Hash collectedObjectInteractionName, Hash collectorId) {
+			super();
+			this.mCollectedObjectInteractionName = collectedObjectInteractionName;
+			this.mCollectorId = collectorId;
+		}
+
+		public Hash getCollectorId() {
 			return mCollectorId;
 		}
-		
+
 		public Hash getCollectedObjectInteractionName() {
 			return mCollectedObjectInteractionName;
 		}
-		
     }
 
 	public static final class UseInfo extends MessageInfo {
@@ -129,22 +127,22 @@ public class MessagesEnum {
 		private final Hash mUseObjectInteractionName;
 		private final Hash mUseWithInteractionName;
 		private final Hash mUserId;
-		
-		public UseInfo(Hash useObjectInteractionName, Hash useWithInteractionName, Hash userId) {
-            super();
-            this.mUseObjectInteractionName = useObjectInteractionName;
-            this.mUseWithInteractionName = useWithInteractionName;
-            this.mUserId = userId;
-        }
 
-        public Hash getUseObjectInteractionName() {
+		public UseInfo(Hash useObjectInteractionName, Hash useWithInteractionName, Hash userId) {
+			super();
+			this.mUseObjectInteractionName = useObjectInteractionName;
+			this.mUseWithInteractionName = useWithInteractionName;
+			this.mUserId = userId;
+		}
+
+		public Hash getUseObjectInteractionName() {
 			return mUseObjectInteractionName;
 		}
-		
+
 		public Hash getUseWithInteractionName() {
 			return mUseWithInteractionName;
 		}
-		
+
 		public Hash getUserId() {
 			return mUserId;
 		}
@@ -152,22 +150,21 @@ public class MessagesEnum {
 
     public static final class TellRoomInfo extends MessageInfo {
     	
-    	private final Hash mRoom;
-    	private final String pMessage;
-    	
-    	public TellRoomInfo(Hash room, String pMessage) {
-            super();
-            this.mRoom = room;
-            this.pMessage = pMessage;
-        }
+		private final Hash mRoom;
+		private final String pMessage;
+
+		public TellRoomInfo(Hash room, String pMessage) {
+			super();
+			this.mRoom = room;
+			this.pMessage = pMessage;
+		}
 
 		public Hash getRoom() {
 			return mRoom;
 		}
-		
+
 		public String getpMessage() {
 			return pMessage;
 		}
-    }
-	
+	}
 }
